@@ -285,6 +285,7 @@ module.exports = function(webpackEnv) {
         PnpWebpackPlugin.moduleLoader(module),
       ],
     },
+    
     module: {
       strictExportPresence: true,
       rules: [

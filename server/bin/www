@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('server:server');
+var debug = require('debug')('boss-server:server');
 var http = require('http');
 
 /**
@@ -20,12 +20,13 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+//连接socketIo
+// require('../socketIO/socketIO_server')(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port,console.log('node at  9093'));
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 

@@ -5,8 +5,14 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-router.get('/register', function (req, res, next) {
-  res.send('register');
+router.post('/register', function (req, res, next) {
+  res.send({
+    code:0
+  });
+
+});
+router.get('/info', function (req, res, next) {
+  res.send('info');
 });
 
 module.exports = router;

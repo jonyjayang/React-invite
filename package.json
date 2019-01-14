@@ -145,5 +145,7 @@
       ]
     ]
   },
-  "proxy": "http://localhost:9093"
+"proxy":"http://localhost:9093"
+
+
 }

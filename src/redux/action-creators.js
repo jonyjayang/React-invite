@@ -9,7 +9,17 @@ import {
     RECEIVE_MSG,
     MSG_READ
 } from './action-types';
-import { Axios } from "axios";
+
+import { axios } from "axios";
+import {
+    reqLogin,
+    reqRegister,
+    reqUpdateUser,
+    reqUser,
+    reqUserList,
+    reqChatMsgList,
+    reqReadMag
+} from '../api';
 
 
 function registerSuccess(data) {
@@ -27,37 +37,32 @@ function errorMsg(msg) {
     }
 }
 
-export function regisger(data) {
-    const {
-        user,
-        pwd,
-        repeatpwd,
-        type
-    } = data;
-    if (!user || !pwd || !repeatpwd || !type) {
-        return errorMsg('用户名密码必须输入')
-    }
-    if (pwd !== repeatpwd) {
-        return errorMsg('与原密码不一致')
-    }
-    return dispatch => {
-        Axios.post('/users/register', {
-            user,
-            pwd,
-            type
-        }).then((res) => {
-            if (res.status === 200 && res.data.code === 0) {
-                dispatch(registerSuccess({
-                    user,
-                    pwd,
-                    type
-                }))
-            } else {
-                dispatch(errorMsg(res.data.msg))
-            }
-
-        })
-    }
 
 
+export const regisger = (data) => {
+ 
+    const {user, pwd, repeatpwd, type} = data;
+    if(!user) {
+        return errorMsg('用户名不能为空')
+    } else if (pwd !== repeatpwd){
+        return errorMsg('两次密码不一致')
+    } else if (pwd === '' ){
+        return errorMsg('密码不能为空')
+    }
+    return async dispatch => {
+    const response = await reqRegister({user, pwd, type});//不需要password2
+        const result = response.data;
+        console.log(result.code)
+        if(result.code === 0) {//成功
+            console.log(result.data)
+            //获取消息列表
+            // getMsgList(dispatch, result.data._id);
+            //分发成功的action
+            dispatch(registerSuccess(result.data))
+        } else {//失败
+            //分发失败的action
+            dispatch(errorMsg(result.msg))
+        }
+    }
 }
+
