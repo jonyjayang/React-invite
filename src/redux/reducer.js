@@ -9,12 +9,14 @@ import {
     RECEIVE_MSG,
     MSG_READ
 } from './action-types';
+import { getRedirectTo } from '../utils/index'
 import { combineReducers } from 'redux';
 const InitState={
     msg:'',
 	user:'',
     type:'',
-    isAuth:false
+    isAuth:false,
+    redirectTo:""
 
 }
 
@@ -22,7 +24,8 @@ const InitState={
 export function user(state={InitState},action){
     switch(action.type){
         case AUTH_SUCCESS:
-            return {...state,msg:"",isAuth:true,...action.payload}
+            const { type, avatar } = action.payload
+            return {...state,redirectTo:getRedirectTo(type,avatar),msg:"",isAuth:true,...action.payload}
         case ERROR_MSG:
             return {...state,isAuth:false, msg:action.msg}
         default:

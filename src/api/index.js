@@ -6,11 +6,11 @@ import ajax from './ajax';
 //注册接口
 export const reqRegister = (user) => ajax('/users/register', user, 'POST');
 //登录接口
-export const reqLogin = (user) => ajax('/login', user, 'POST');
+export const reqLogin = (user) => ajax('/users/login', user, 'POST');
 //用户更新接口
 export const reqUpdateUser = (user) => ajax('/update', user, 'POST');
 // 获取用户信息
-export const reqUser = () => ajax('/user');
+// export const reqUser = () => ajax('/user');
 //获取对应用户列表
 export const reqUserList = (type) => ajax('/userlist', {type});
 //请求获取当前用户所有的聊天列表

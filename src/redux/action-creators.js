@@ -21,7 +21,7 @@ import {
     reqReadMag
 } from '../api';
 
-
+//注册登录成功
 function registerSuccess(data) {
     return {
         type: AUTH_SUCCESS,
@@ -38,7 +38,7 @@ function errorMsg(msg) {
 }
 
 
-
+//注册
 export const regisger = (data) => {
  
     const {user, pwd, repeatpwd, type} = data;
@@ -50,11 +50,11 @@ export const regisger = (data) => {
         return errorMsg('密码不能为空')
     }
     return async dispatch => {
-    const response = await reqRegister({user, pwd, type});//不需要password2
+    const response = await reqRegister({user, pwd,type});//不需要password2
         const result = response.data;
         console.log(result.code)
         if(result.code === 0) {//成功
-            console.log(result.data)
+            console.log(result)
             //获取消息列表
             // getMsgList(dispatch, result.data._id);
             //分发成功的action
@@ -66,3 +66,28 @@ export const regisger = (data) => {
     }
 }
 
+//登录
+export const login = (data) => {
+ 
+    const {user, pwd} = data;
+    if(!user) {
+        return errorMsg('用户名不能为空')
+    } else if (pwd === '' ){
+        return errorMsg('密码不能为空')
+    }
+    return async dispatch => {
+    const response = await reqLogin({user, pwd});//不需要password2
+        const result = response.data;
+        console.log(result.code)
+        if(result.code === 0) {//成功
+            console.log(result)
+            //获取消息列表
+            // getMsgList(dispatch, result.data._id);
+            //分发成功的action
+            dispatch(registerSuccess(result.data))
+        } else {//失败
+            //分发失败的action
+            dispatch(errorMsg(result.msg))
+        }
+    }
+}

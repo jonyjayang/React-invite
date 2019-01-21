@@ -4,11 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-@withRouter
-@connect(
-	null,
-	null
-)
+
 class AuthRoute extends React.Component{
 	componentDidMount() {
 		const publicList = ['/login','/register']
@@ -40,7 +36,8 @@ class AuthRoute extends React.Component{
 	}
 
 }
-export default AuthRoute
+
+export default withRouter(connect(null, null) (AuthRoute))
 
 
 

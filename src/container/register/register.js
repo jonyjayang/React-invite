@@ -3,7 +3,8 @@ import Logo from '../../components/logo/logo'
 import {List, InputItem, WhiteSpace, Button,Radio} from 'antd-mobile'
 import { connect } from "react-redux";
 import {regisger} from '../../redux/action-creators'
-
+//重定向
+import {Redirect} from 'react-router-dom';
 class Register extends Component{
     constructor(props){
         super(props);
@@ -25,7 +26,11 @@ class Register extends Component{
         })
     }
     render(){
-        const RadioItem=Radio.RadioItem
+        const RadioItem=Radio.RadioItem;
+          const {redirectTo}=this.props.user;
+          if(redirectTo){
+              return (<Redirect to={redirectTo}></Redirect>)
+          }
         return (
           <div>
                 <Logo></Logo>
