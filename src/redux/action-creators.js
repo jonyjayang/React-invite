@@ -10,7 +10,6 @@ import {
     MSG_READ
 } from './action-types';
 
-import { axios } from "axios";
 import {
     reqLogin,
     reqRegister,
@@ -37,6 +36,12 @@ function errorMsg(msg) {
     }
 }
 
+export function loadData(userinfo) {
+    return {
+        type: RECEIVE_USER,
+        payload: userinfo
+    }
+}
 
 //注册
 export const regisger = (data) => {

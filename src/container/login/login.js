@@ -3,6 +3,7 @@ import Logo from '../../components/logo/logo'
 import {List, InputItem, WingBlank, WhiteSpace, Button} from 'antd-mobile'
 import { login } from "../../redux/action-creators";
 import { connect } from "react-redux";
+import {Redirect} from 'react-router-dom';
 class Login extends Component{
     constructor(props){
         super(props);
@@ -27,6 +28,10 @@ class Login extends Component{
             this.props.login(this.state)
     }
     render(){
+          const {redirectTo}=this.props.user;
+          if(redirectTo){
+              return (<Redirect to={redirectTo}></Redirect>)
+          }
         return (
         <div>
             <Logo></Logo>
@@ -34,7 +39,7 @@ class Login extends Component{
                 <List>
                     <InputItem  onChange={(v)=>{this.handleChange('user',v)}}>账号</InputItem>
                     <WhiteSpace></WhiteSpace>
-                    <InputItem  onChange={(v)=>{this.handleChange('pwd',v)}}>密码</InputItem>
+                    <InputItem  type="password" onChange={(v)=>{this.handleChange('pwd',v)}}>密码</InputItem>
                     <WhiteSpace></WhiteSpace>
                     <Button type="primary" onClick={this.handleLogin}>登录</Button>
                     <WhiteSpace></WhiteSpace>

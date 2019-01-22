@@ -28,6 +28,8 @@ export function user(state={InitState},action){
             return {...state,redirectTo:getRedirectTo(type,avatar),msg:"",isAuth:true,...action.payload}
         case ERROR_MSG:
             return {...state,isAuth:false, msg:action.msg}
+        case RECEIVE_USER:
+            return action.payload
         default:
             return state
         

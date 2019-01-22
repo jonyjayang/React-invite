@@ -18,15 +18,30 @@ router.post('/register', function (req, res, next) {
           })
         }else{
           new UserModel({user, type, pwd:md5(pwd)}).save(function (err, doc) {
-              res.cookie('userid', user._id, {maxAge: 1000*60*60*24*7});
-              res.send({code: 0, data: {_id: user._id, user, type}});
+              res.cookie('userid', doc._id, {maxAge: 1000*60*60*24*7});
+              res.send({code: 0, data: {_id: doc._id, user, type}});
           })
         }
     })
 });
 //获取用户信息
 router.get('/info', function (req, res, next) {
-  res.send('info');
+  const user_id=req.cookies.userid;
+  if(!user_id){
+   return req.snd({
+      code:1,
+      msg:"请先登录"
+    })
+  }
+  //如果存在user_id进行查询用户直接进入用户主页面
+  UserModel.findOne({_id:user_id},function (err,doc) {
+     return  res.json({
+        code:0,
+        data:doc
+      })
+    
+    
+  })
 });
 //登录
 router.post('/login',function (req,res,next) {
@@ -43,7 +58,7 @@ router.post('/login',function (req,res,next) {
         msg:"后端出错"
       })
     }else{
-      res.cookie('userid', user._id, {
+      res.cookie('userid', doc._id, {
         maxAge: 1000 * 60 * 60 * 24 * 7
       });
       res.json({

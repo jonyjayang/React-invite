@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-
+import { loadData } from "../../redux/action-creators";
 import { connect } from 'react-redux'
 
 
@@ -37,7 +37,7 @@ class AuthRoute extends React.Component{
 
 }
 
-export default withRouter(connect(null, null) (AuthRoute))
+export default withRouter(connect(null, {loadData}) (AuthRoute))
 
 
 
